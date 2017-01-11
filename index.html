@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+    <title>瀑布流</title>
+    <style type="text/css">
+    	body {
+    		background: #4d4d4d;
+    	}
+    	.clear {
+    		clear: both;
+    	}
+    	.container {
+    		width: 960px;
+    		margin: 0 auto;
+			
+    	}
+    	.box{
+    		width: 320px;
+    		float: left;
+    		box-sizing: border-box;
+    	}
+
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="box box1" id="box1"></div>
+        <div class="box box2" id="box2" ></div>
+        <div class="box box3" id="box3"></div>
+        <div class="clear"></div>
+    </div>
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script>
+    	(function(){
+    		function $(id){
+    			return document.getElementById(id);
+    		}
+    		var box1 = $('box1');
+    		var box2 = $('box2');
+    		var box3 = $('box3');
+    		var container = $('container');
+    		for(var i = 0 ; i < 40; i++){
+    			// var contentBox = document.createElement('<div id="demo'+i+'"></div>');
+    			var contentBox = document.createElement('div');
+    			contentBox.id = 'demo'+i;
+    			contentBox.style.width = 320 + 'px';
+    			contentBox.style.height = Math.floor(Math.random()*200) + 100 + 'px';
+    			console.log(contentBox.offsetHeight);
+    			contentBox.style.border = '1px solid #ddd';
+    			contentBox.style.borderRadius = 5 + 'px';
+    			contentBox.style.boxShadow = '0 0 20px #ddd';
+    			contentBox.style.marginTop = '5px';
+    			contentBox.style.backgroundColor = 'rgba('+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+','+Math.random()*1+')';
+    			console.log(contentBox.style.background);
+    			var minHeightIndex = getMinHeightIndex();
+    			container.children[minHeightIndex].appendChild(contentBox);
+    		}
+
+    		/*
+    		获取三个容器中最小的高度
+    		*/
+    		// function getMinHeight(){
+    		// 	return Math.min(box1.offsetHeight,box2.offsetHeight,box3.offsetHeight);
+    		// }
+    		function getMinHeightIndex(){
+    			var minHeight = Math.min(box1.offsetHeight,box2.offsetHeight,box3.offsetHeight);
+    			for(var i = 0; i < container.children.length - 1 ;i++){
+    				if (minHeight == container.children[i].offsetHeight) {
+    					return i;
+    				}
+    			}
+    		}
+    	})();
+    </script>
+</body>
+</html>
